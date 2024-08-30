@@ -4,43 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR Swimming Sturgeon</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: transparent; /* Ensure AR appears natural in the real world */
-        }
-        .sketchfab-embed-wrapper {
-            width: 100%;
-            height: 100vh;
-        }
-        iframe {
-            border: none; /* Removes the iframe border for a cleaner look */
-        }
-    </style>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Sketchfab Embed with All UI Elements Disabled -->
-<div class="sketchfab-embed-wrapper">
-    <iframe title="Model 66A - Atlantic Sturgeon" 
-            frameborder="0" 
-            allowfullscreen 
-            mozallowfullscreen="true" 
-            webkitallowfullscreen="true" 
-            allow="autoplay; fullscreen; xr-spatial-tracking" 
-            xr-spatial-tracking 
-            execution-while-out-of-viewport 
-            execution-while-not-rendered 
-            web-share 
-            src="https://sketchfab.com/models/ffeabdae926d4cf798cd82da55ebd222/embed?autostart=1&preload=1&transparent=1&ui_animations=0&ui_infos=0&ui_stop=0&ui_inspector=0&ui_watermark_link=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_annotations=0&dnt=1">
-    </iframe>
-</div>
+<!-- Model Viewer for AR with Animation and Camera Background -->
+<model-viewer id="sturgeonViewer" src="models/animated-sturgeon.glb" alt="A 3D model of an Atlantic Sturgeon" 
+              ar ar-modes="scene-viewer webxr"
+              camera-controls 
+              disable-zoom 
+              autoplay 
+              animation-name="swim" 
+              ar-scale="fixed" 
+              ar-placement="floor"
+              shadow-intensity="0.5"
+              environment-image="neutral"
+              style="width: 100%; height: 100vh;"
+              reveal="auto"
+              onload="console.log('Model loaded successfully')"
+              onerror="console.error('Error loading the model:', this.error)">
+</model-viewer>
+
+<script src="app.js"></script>
 
 </body>
 </html>
