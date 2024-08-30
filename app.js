@@ -17,10 +17,10 @@ scene.add(pointLight);
 
 // Load the fish model
 const loader = new THREE.GLTFLoader();
-loader.load('models/sturgeon.glb', function (gltf) {
+loader.load('models/sturgeon.glb', function (gltf) { // Correct path to the model
     const fish = gltf.scene;
     fish.position.set(0, 0, -10); // Start position of the fish
-    fish.scale.set(0.5, 0.5, 0.5); // Scale down the fish if needed
+    fish.scale.set(0.5, 0.5, 0.5); // Adjust scale as needed
     scene.add(fish);
 
     // Animate the fish
@@ -36,6 +36,7 @@ loader.load('models/sturgeon.glb', function (gltf) {
 }, undefined, function (error) {
     console.error('Error loading the model', error);
 });
+
 
 // Set camera position
 camera.position.z = 5;
