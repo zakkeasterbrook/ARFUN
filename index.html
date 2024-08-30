@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<!-- Sketchfab Embed for Atlantic Sturgeon Model -->
+<!-- Sketchfab Embed for AR Experience -->
 <div class="sketchfab-embed-wrapper">
     <iframe title="Model 66A - Atlantic Sturgeon" 
             frameborder="0" 
@@ -19,11 +19,22 @@
             execution-while-out-of-viewport 
             execution-while-not-rendered 
             web-share 
-            src="https://sketchfab.com/models/ffeabdae926d4cf798cd82da55ebd222/embed?autostart=1&preload=1&transparent=1&ui_animations=0&ui_infos=0&ui_stop=0&ui_inspector=0&ui_watermark_link=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_annotations=0&dnt=1">
+            src="https://sketchfab.com/models/ffeabdae926d4cf798cd82da55ebd222/embed?autostart=1&preload=1&transparent=1&ui_animations=0&ui_infos=0&ui_stop=0&ui_inspector=0&ui_watermark_link=0&ui_watermark=0&ui_ar=1&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_annotations=0&dnt=1">
     </iframe>
 </div>
 
-<script src="app.js"></script>
+<!-- AR Button for launching AR Experience -->
+<div class="ar-button-container">
+    <button id="ar-button">View in AR</button>
+</div>
+
+<script>
+    // Open AR mode when the AR button is clicked
+    document.getElementById('ar-button').addEventListener('click', () => {
+        // Open the direct link to AR mode on mobile devices
+        window.open('https://sketchfab.com/models/ffeabdae926d4cf798cd82da55ebd222/embed?autostart=1&ui_ar=1', '_blank');
+    });
+</script>
 
 </body>
 </html>
