@@ -1,6 +1,6 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/loaders/GLTFLoader.js';
-import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/webxr/ARButton.js';
+import * as THREE from './node_modules/three/build/three.module.js';
+import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+import { ARButton } from './node_modules/three/examples/jsm/webxr/ARButton.js';
 
 // Scene setup
 const scene = new THREE.Scene();
@@ -21,7 +21,7 @@ scene.add(light);
 
 // Load the GLB model with animation
 const loader = new GLTFLoader();
-loader.load('models/sturgeon.glb', (gltf) => {
+loader.load('./models/sturgeon.glb', (gltf) => {
     const model = gltf.scene;
     model.scale.set(10, 10, 10); // Scale the model up significantly
     scene.add(model);
