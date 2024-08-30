@@ -3,20 +3,20 @@ body, html {
     padding: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden; /* Prevent scroll for immersive AR */
-    background: transparent; /* Ensure the background uses the camera view */
+    overflow: hidden; /* Prevents scrolling */
     display: flex;
     justify-content: center;
     align-items: center;
+    background: transparent; /* Use a transparent background for AR */
 }
 
-model-viewer {
+.sketchfab-embed-wrapper {
     width: 100%;
     height: 100vh;
-    --poster-color: transparent; /* Hide any loading background */
-    --progress-bar-color: rgba(255, 255, 255, 0.8); /* Subtle loading indicator */
 }
 
-#ar-button {
-    display: none; /* Hide manual AR button to force auto AR */
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none; /* Removes the iframe border for a clean look */
 }
