@@ -10,17 +10,22 @@
 <body>
 
 <!-- Model Viewer with Full-Screen AR Capability -->
-<model-viewer id="sturgeonViewer" src="models/sturgeon.glb" alt="A 3D model of an Atlantic Sturgeon"
-              ar ar-modes="webxr scene-viewer"
+<model-viewer id="sturgeonViewer" src="models/animated-sturgeon.glb" alt="A 3D model of an Atlantic Sturgeon"
+              ar ar-modes="webxr scene-viewer quick-look"
               camera-controls
+              disable-zoom
               autoplay
               animation-name="swim"
               ar-scale="fixed"
               ar-placement="floor"
               shadow-intensity="0.5"
               style="width: 100%; height: 100vh;"
-              reveal="auto"
-              ar-status="not-presenting">
+              reveal="auto">
+    <button slot="ar-button" id="ar-button">View in your space</button>
+    <div id="ar-prompt">
+        <img src="https://modelviewer.dev/shared-assets/icons/hand.png">
+        Move your device
+    </div>
 </model-viewer>
 
 <script src="app.js"></script>
