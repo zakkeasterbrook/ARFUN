@@ -1,9 +1,20 @@
 body, html {
     margin: 0;
-    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent; /* Ensure AR appears natural in the real world */
 }
 
-#scene-container {
-    width: 100vw;
+model-viewer {
+    width: 100%;
     height: 100vh;
+    --poster-color: transparent; /* Hide loading background */
+}
+
+iframe {
+    border: none; /* Removes any iframe border for a cleaner look */
 }
