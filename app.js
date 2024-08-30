@@ -1,36 +1,56 @@
-// Get the model-viewer element
-const viewer = document.getElementById('sturgeonViewer');
+import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+import { GLTFLoader } from 'https://unpkg.com/three/examples/jsm/loaders/GLTFLoader.js';
+import { ARButton } from 'https://unpkg.com/three/examples/jsm/webxr/ARButton.js';
 
-// Event listener to ensure AR starts when ready
-viewer.addEventListener('ar-status', (event) => {
-    if (event.detail.status === 'session-started') {
-        console.log('AR session started successfully');
-        startModelAnimation();
-    } else if (event.detail.status === 'failed') {
-        console.warn('AR session failed to start');
+// Scene setup
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.xr.enabled = true;
+document.body.appendChild(renderer.domElement);
+
+// Add AR button to the page
+document.body.appendChild(ARButton.createButton(renderer));
+
+// Light setup
+const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+light.position.set(0.5, 1, 0.25);
+scene.add(light);
+
+// Load the GLB model with animation
+const loader = new GLTFLoader();
+loader.load('models/sturgeon.glb', (gltf) => {
+    const model = gltf.scene;
+    model.scale.set(10, 10, 10); // Scale the model up significantly
+    scene.add(model);
+
+    // Extract animations and play them
+    const mixer = new THREE.AnimationMixer(model);
+    gltf.animations.forEach((clip) => {
+        mixer.clipAction(clip).play();
+    });
+
+    // Animation update within the render loop
+    function animate() {
+        renderer.setAnimationLoop((timestamp, frame) => {
+            if (frame) {
+                mixer.update(0.01); // Update the animation mixer
+                renderer.render(scene, camera);
+            }
+        });
     }
+
+    // Start animation when AR session starts
+    renderer.xr.addEventListener('sessionstart', animate);
+}, undefined, (error) => {
+    console.error('Error loading model:', error);
 });
 
-// Function to position the model directly in front of the user in AR
-function startModelAnimation() {
-    let posX = 0; // Initial position on the X-axis
-    let direction = 1; // Start moving forward
-
-    function animateModel() {
-        posX += 0.01 * direction; // Move the model along the X-axis
-
-        // Bounce back when reaching certain bounds
-        if (posX > 1 || posX < -1) {
-            direction *= -1; // Reverse direction
-        }
-
-        // Update model's position attributes
-        viewer.setAttribute('camera-target', `${posX}m 1m 0m`); // Adjust the position dynamically
-
-        // Loop the animation
-        requestAnimationFrame(animateModel);
-    }
-
-    // Start the model movement animation
-    animateModel();
-}
+// Handle resizing
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
