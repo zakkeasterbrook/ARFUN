@@ -4,35 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR Swimming Sturgeon</title>
-    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent; /* AR uses the camera as the background */
+        }
+        model-viewer {
+            width: 100%;
+            height: 100vh;
+            --poster-color: transparent; /* Hide the loading background */
+        }
+    </style>
 </head>
 <body>
 
-<!-- Sketchfab Embed for AR Experience -->
-<div class="sketchfab-embed-wrapper">
-    <iframe title="Model 66A - Atlantic Sturgeon" 
-            frameborder="0" 
-            allowfullscreen 
-            mozallowfullscreen="true" 
-            webkitallowfullscreen="true" 
-            allow="autoplay; fullscreen; xr-spatial-tracking" 
-            execution-while-out-of-viewport 
-            execution-while-not-rendered 
-            web-share 
-            src="https://sketchfab.com/models/ffeabdae926d4cf798cd82da55ebd222/embed?autostart=1&preload=1&transparent=1&ui_animations=0&ui_infos=0&ui_stop=0&ui_inspector=0&ui_watermark_link=0&ui_watermark=0&ui_ar=1&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_annotations=0&dnt=1">
-    </iframe>
-</div>
-
-<!-- AR Button for launching AR Experience -->
-<div class="ar-button-container">
-    <button id="ar-button">View in AR</button>
-</div>
+<!-- Google Model Viewer for AR -->
+<model-viewer id="sturgeonViewer" 
+              src="models/animated-sturgeon.glb" 
+              alt="A 3D model of an Atlantic Sturgeon" 
+              ar ar-modes="scene-viewer webxr quick-look" 
+              camera-controls 
+              disable-zoom 
+              autoplay 
+              animation-name="swim" 
+              ar-scale="fixed" 
+              ar-placement="floor" 
+              shadow-intensity="0.5" 
+              environment-image="neutral" 
+              reveal="auto"
+              style="width: 100%; height: 100vh;"
+              ar-status="not-presenting"
+              onload="console.log('Model loaded successfully')"
+              onerror="console.error('Error loading the model:', this.error)">
+</model-viewer>
 
 <script>
-    // Open AR mode when the AR button is clicked
-    document.getElementById('ar-button').addEventListener('click', () => {
-        // Open the direct link to AR mode on mobile devices
-        window.open('https://sketchfab.com/models/ffeabdae926d4cf798cd82da55ebd222/embed?autostart=1&ui_ar=1', '_blank');
+    // Add event listener to automatically prompt AR mode
+    const viewer = document.getElementById('sturgeonViewer');
+
+    // Automatically start AR session if available
+    viewer.addEventListener('ar-status', (event) => {
+        if (event.detail.status === 'session-started') {
+            console.log('AR session started successfully');
+        } else if (event.detail.status === 'failed') {
+            console.warn('AR session failed to start');
+        }
     });
 </script>
 
