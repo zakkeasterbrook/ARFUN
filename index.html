@@ -9,21 +9,18 @@
 </head>
 <body>
 
-<!-- Model Viewer for AR with Animation and Camera Background -->
-<model-viewer id="sturgeonViewer" src="models/animated-sturgeon.glb" alt="A 3D model of an Atlantic Sturgeon" 
-              ar ar-modes="scene-viewer webxr"
-              camera-controls 
-              disable-zoom 
-              autoplay 
-              animation-name="swim" 
-              ar-scale="fixed" 
+<!-- Model Viewer with Full-Screen AR Capability -->
+<model-viewer id="sturgeonViewer" src="models/animated-sturgeon.glb" alt="A 3D model of an Atlantic Sturgeon"
+              ar ar-modes="webxr scene-viewer"
+              camera-controls
+              autoplay
+              animation-name="swim"
+              ar-scale="fixed"
               ar-placement="floor"
               shadow-intensity="0.5"
-              environment-image="neutral"
               style="width: 100%; height: 100vh;"
               reveal="auto"
-              onload="console.log('Model loaded successfully')"
-              onerror="console.error('Error loading the model:', this.error)">
+              ar-status="not-presenting">
 </model-viewer>
 
 <script src="app.js"></script>
