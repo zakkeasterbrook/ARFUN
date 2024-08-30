@@ -14,7 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: transparent; /* Transparent for AR camera background */
+            background: transparent; /* AR uses the camera as the background */
         }
         model-viewer {
             width: 100%;
@@ -48,7 +48,7 @@
     // Reference to the model-viewer element
     const viewer = document.getElementById('sturgeonViewer');
 
-    // Function to automatically enter AR mode when available
+    // Automatically enter AR mode when available
     function autoEnterAR() {
         if (viewer.canActivateAR) {
             viewer.activateAR();
@@ -64,6 +64,16 @@
             console.log('AR session started successfully');
         } else if (event.detail.status === 'failed') {
             console.warn('AR session failed to start');
+        }
+    });
+
+    // Check if animations are present and correctly configured
+    viewer.addEventListener('load', () => {
+        const hasAnimations = viewer.availableAnimations.length > 0;
+        if (hasAnimations) {
+            console.log('Animations detected and should play automatically.');
+        } else {
+            console.warn('No animations detected in the model.');
         }
     });
 </script>
