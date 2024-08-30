@@ -1,31 +1,33 @@
-// Function to move the model in 3D space
+// Reference to the model viewer element
 const viewer = document.getElementById('sturgeonViewer');
 
-// Wait for the model to load
-viewer.addEventListener('load', () => {
-    console.log('Model is ready and AR mode is supported');
-    moveModel();
+// Wait for the model to be ready
+viewer.addEventListener('ar-status', (event) => {
+    if (event.detail.status === 'session-started') {
+        console.log('AR session started');
+        moveModel();
+    }
 });
 
-// Function to animate the model's position
+// Function to move the model in AR space
 function moveModel() {
     let posX = 0;
-    let direction = 1; // Start moving forward
+    let direction = 1; // Movement direction
 
     function animate() {
-        // Update position
-        posX += 0.02 * direction; // Adjust speed as needed
+        // Update position along the X axis
+        posX += 0.02 * direction; // Adjust the speed of movement
 
-        // Check boundaries and reverse direction if needed
-        if (posX > 2 || posX < -2) { // Move between -2m and +2m
+        // Reverse direction if the model goes beyond set boundaries
+        if (posX > 1 || posX < -1) { // Move within -1m to +1m range
             direction *= -1;
         }
 
-        // Apply position to the model
-        viewer.setAttribute('camera-target', `${posX}m 1m 0m`); // Keep y at 1m for height, adjust if necessary
-        viewer.setAttribute('camera-orbit', `${posX}m 1m 0m`);
+        // Set the new position in 3D space
+        viewer.setAttribute('ar-placement', `floor`);
+        viewer.setAttribute('camera-target', `${posX}m 1m 0m`);
 
-        // Continue the animation
+        // Repeat the animation
         requestAnimationFrame(animate);
     }
 
