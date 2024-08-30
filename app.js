@@ -52,7 +52,8 @@ loader.load(
     },
     undefined,
     function (error) {
-        console.error('Error loading the model', error); // Detailed error logging
+        console.error('Error loading the model:', error); // Detailed error message
+        alert('Failed to load the model. Please check the console for more details.');
     }
 );
 
