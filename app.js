@@ -1,35 +1,36 @@
-// Reference to the model viewer element
+// Get the model-viewer element
 const viewer = document.getElementById('sturgeonViewer');
 
-// Ensure AR starts correctly when the user interacts
+// Event listener to ensure AR starts when ready
 viewer.addEventListener('ar-status', (event) => {
     if (event.detail.status === 'session-started') {
-        console.log('AR session started');
-        moveModel();
+        console.log('AR session started successfully');
+        startModelAnimation();
+    } else if (event.detail.status === 'failed') {
+        console.warn('AR session failed to start');
     }
 });
 
-// Function to animate the model's position
-function moveModel() {
-    let posX = 0;
-    let direction = 1; // Movement direction
+// Function to position the model directly in front of the user in AR
+function startModelAnimation() {
+    let posX = 0; // Initial position on the X-axis
+    let direction = 1; // Start moving forward
 
-    function animate() {
-        // Update position along the X axis
-        posX += 0.01 * direction; // Adjust the speed of movement
+    function animateModel() {
+        posX += 0.01 * direction; // Move the model along the X-axis
 
-        // Reverse direction if the model goes beyond set boundaries
-        if (posX > 1 || posX < -1) { // Move within -1m to +1m range
-            direction *= -1;
+        // Bounce back when reaching certain bounds
+        if (posX > 1 || posX < -1) {
+            direction *= -1; // Reverse direction
         }
 
-        // Apply position to the model
-        viewer.setAttribute('camera-target', `${posX}m 1m 0m`); // Y is kept constant at 1m height
+        // Update model's position attributes
+        viewer.setAttribute('camera-target', `${posX}m 1m 0m`); // Adjust the position dynamically
 
-        // Continue the animation
-        requestAnimationFrame(animate);
+        // Loop the animation
+        requestAnimationFrame(animateModel);
     }
 
-    // Start the animation
-    animate();
+    // Start the model movement animation
+    animateModel();
 }
