@@ -14,7 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: transparent; /* AR uses the camera as the background */
+            background: transparent; /* Transparent for AR camera background */
         }
         model-viewer {
             width: 100%;
@@ -25,33 +25,42 @@
 </head>
 <body>
 
-<!-- Google Model Viewer for AR -->
+<!-- Google Model Viewer for AR with Enhanced Settings -->
 <model-viewer id="sturgeonViewer" 
               src="models/sturgeon.glb" 
               alt="A 3D model of an Atlantic Sturgeon" 
-              ar ar-modes="scene-viewer webxr quick-look" 
+              ar ar-modes="webxr scene-viewer quick-look" 
               camera-controls 
               disable-zoom 
               autoplay 
-              animation-name="swim" 
               ar-scale="fixed" 
               ar-placement="floor" 
-              shadow-intensity="0.5" 
+              shadow-intensity="0.8" 
               environment-image="neutral" 
               reveal="auto"
-              style="width: 100%; height: 100vh;"
-              ar-status="not-presenting"
-              onload="console.log('Model loaded successfully')"
-              onerror="console.error('Error loading the model:', this.error)">
+              scale="10 10 10"  <!-- Scale up the model size significantly -->
+              onload="autoEnterAR()"
+              onerror="console.error('Error loading the model:', this.error)"
+              style="width: 100%; height: 100vh;">
 </model-viewer>
 
 <script>
-    // Add event listener to automatically prompt AR mode
+    // Reference to the model-viewer element
     const viewer = document.getElementById('sturgeonViewer');
 
-    // Automatically start AR session if available
+    // Function to automatically enter AR mode when available
+    function autoEnterAR() {
+        if (viewer.canActivateAR) {
+            viewer.activateAR();
+        }
+    }
+
+    // Event listener to ensure AR starts automatically if available
     viewer.addEventListener('ar-status', (event) => {
-        if (event.detail.status === 'session-started') {
+        if (event.detail.status === 'not-presenting') {
+            console.log('Trying to start AR session automatically');
+            autoEnterAR();
+        } else if (event.detail.status === 'session-started') {
             console.log('AR session started successfully');
         } else if (event.detail.status === 'failed') {
             console.warn('AR session failed to start');
