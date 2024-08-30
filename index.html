@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sketchfab Model Viewer</title>
+    <title>AR Swimming Sturgeon</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body, html {
             margin: 0;
@@ -13,34 +14,33 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #003366; /* Optional: Set to your preferred background */
+            background: transparent; /* Use device camera for AR */
         }
-        .sketchfab-embed-wrapper {
+        model-viewer {
             width: 100%;
             height: 100vh;
-        }
-        iframe {
-            border: none; /* Removes the iframe border for a cleaner look */
+            --poster-color: transparent; /* Hide loading background */
         }
     </style>
 </head>
 <body>
 
-<!-- Sketchfab Embed -->
-<div class="sketchfab-embed-wrapper">
-    <iframe title="Model 66A - Atlantic Sturgeon" 
-            frameborder="0" 
-            allowfullscreen 
-            mozallowfullscreen="true" 
-            webkitallowfullscreen="true" 
-            allow="autoplay; fullscreen; xr-spatial-tracking" 
-            xr-spatial-tracking 
-            execution-while-out-of-viewport 
-            execution-while-not-rendered 
-            web-share 
-            src="https://sketchfab.com/models/ffeabdae926d4cf798cd82da55ebd222/embed?autostart=1&preload=1&transparent=1&ui_infos=0&ui_watermark_link=0&ui_watermark=0&ui_annotations=0&ui_theme=dark&dnt=1">
-    </iframe>
-</div>
+<!-- Model Viewer with AR Capabilities -->
+<model-viewer src="path/to/your/animated-sturgeon.glb" alt="A 3D model of an Atlantic Sturgeon" 
+              ar ar-modes="scene-viewer webxr" 
+              camera-controls 
+              disable-zoom 
+              autoplay 
+              animation-name="swim" 
+              ar-scale="fixed" 
+              ar-placement="floor" 
+              shadow-intensity="0.5" 
+              ar-status="not-presenting" 
+              style="width: 100%; height: 100vh;"
+              reveal="auto"
+              onload="console.log('Model loaded successfully')"
+              onerror="console.error('Error loading the model:', this.error)">
+</model-viewer>
 
 </body>
 </html>
